@@ -23,15 +23,19 @@ const citiesList = [
     "madrid"
 ];
 
+const addFields = (cities,city) => ({name:city,times:cities[city]}); 
+const sortByTimes = (elem1,elem2) => elem2.times - elem1.times;
+const takeName = city => city.name;
+
 const logMostOccurCities = n => {
     const cities = {};
     citiesList.forEach(city => {
         cities[city] = !cities[city] ? 1 : cities[city] += 1
     });
     return Object.keys(cities)
-        .map(city => ({name:city,times:cities[city]}))
-        .sort((a,b) => b.times-a.times)
-        .map(city => city.name)
+        .map(city => addFields(cities,city))
+        .sort((elem1,elem2) => sortByTimes(elem1,elem2))
+        .map(city => takeName(city))
         .slice(0,n);
 }
 
